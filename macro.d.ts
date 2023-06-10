@@ -31,6 +31,10 @@ declare module "react-git-info/macro" {
      */
     readonly tags: string[];
     /**
+     * Branches pointing to the current commit.
+     */
+    readonly branches: string[];
+    /**
      * The current git branch. `undefined` if the repository is in a detached HEAD state.
      */
     readonly branch?: string;
