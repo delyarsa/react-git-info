@@ -35,8 +35,9 @@ const parseRefs = (refs) => {
       tags.push(isTag[1]);
     } else if (isBranch) {
       branch = isBranch[1];
+      branches.push(branch);
     } else {
-      branches.push(item)
+      branches.push(item);
     }
   });
 
