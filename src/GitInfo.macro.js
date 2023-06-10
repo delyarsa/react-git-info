@@ -24,6 +24,7 @@ const parsedGitLog = (() => {
 const parseRefs = (refs) => {
   let branch = undefined;
   const tags = [];
+  const branches = [];
   refs.split(', ').map((item) => {
     // if HEAD is not detached, the branch is printed out as `HEAD -> branch_name`.
     // if HEAD is detached, the output becomes `HEAD`.
@@ -32,19 +33,21 @@ const parseRefs = (refs) => {
 
     if (isTag && isTag.length > 1) {
       tags.push(isTag[1]);
+    } else if (isBranch) {
+      branch = isBranch[1];
     } else {
-      branch = isBranch ? isBranch[1] : branch;
+      branches.push(item)
     }
   });
 
-  return [branch, tags];
+  return [branch, branches, tags];
 };
 
 const gitInfo = (() => {
   const ret = {};
   try {
     const logResult = parsedGitLog;
-    [ret.branch, ret.tags] = parseRefs(logResult.refs);
+    [ret.branch, ret.branches, ret.tags] = parseRefs(logResult.refs);
     ret.commit = logResult.commit;
   } catch (e) {
     throw Error(`Unable to parse the git information: ${e}`);
